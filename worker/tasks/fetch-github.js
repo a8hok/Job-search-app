@@ -1,16 +1,5 @@
 const fetch = require('node-fetch');
-const redis = require('redis');
-const { promisify } = require("util");
-
-const client = redis.createClient();
-const getAsync = promisify(client.get).bind(client);
-const setAsync = promisify(client.set).bind(client);
-
-// Set values into Redis
-const _setKeyValueRedis = async (juniorJobs) => {
-    const setJobsRedis = await setAsync('github', JSON.stringify(juniorJobs));
-    console.log(juniorJobs.length);
-}
+const { _setKeyValueRedis } = require('./store/redis');
 
 // Filter Junior jobs only
 const _filterJuniorJobs = (allJobs) => {
@@ -26,7 +15,7 @@ const _filterJuniorJobs = (allJobs) => {
         }
         return true;
     });
-}
+};
 
 // Fetch jobs from github api
 const fetchGithubJobs = async () => {
@@ -34,6 +23,7 @@ const fetchGithubJobs = async () => {
     let page = 0;
     const allJobs = [];
     const baseUrl = 'https://jobs.github.com/positions.json';
+
     while (resultCount > 0) {
         const response = await fetch(`${baseUrl}?page=${page}`);
         const jsonRes = await response.json();
@@ -42,8 +32,10 @@ const fetchGithubJobs = async () => {
         page++;
         console.log(jsonRes.length);
     }
+
     const juniorJobs = _filterJuniorJobs(allJobs);
     _setKeyValueRedis(juniorJobs);
+    console.log(juniorJobs);
 };
 
 module.exports = fetchGithubJobs;
