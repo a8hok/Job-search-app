@@ -1,0 +1,28 @@
+{
+  "name": "job-search-app",
+  "version": "1.0.0",
+  "description": "App for Job search",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a8hok/Job-search-app.git"
+  },
+  "keywords": [
+    "ReactJS",
+    "NodeJS",
+    "Redis"
+  ],
+  "author": "a8hok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a8hok/Job-search-app/issues"
+  },
+  "homepage": "https://github.com/a8hok/Job-search-app#readme",
+  "dependencies": {
+    "cron": "^1.8.2",
+    "node-fetch": "^2.6.0"
+  }
+}
